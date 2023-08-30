@@ -32,7 +32,7 @@ router.post('/Fronted', (ctx) => {
 
 router.get('/Fronted', (ctx) => {
     ctx.response.type = 'application/json'; 
-    ctx.response.body = datosArray; 
+    ctx.response.body = datosFronted; 
 });
 
 function guardarDatosFrontedEnArchivo(datosFronted) {
