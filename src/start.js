@@ -14,4 +14,5 @@ async function deploy() {
     console.log("Seeding database...");
     console.log(output3);
 }
+
 deploy();

@@ -1,4 +1,4 @@
-const fs = require('fs');
+PORT = 3000
 const Router = require('@koa/router');
 const Koa = require('koa');
 const { default: koaBody } = require('koa-body');
@@ -6,6 +6,7 @@ const KoaLogger = require('koa-logger');
 const cors = require('@koa/cors');
 const path = require('path'); // Importa el módulo 'path'
 const app = new Koa();
+const fs = require('fs');
 
 const router = new Router();
 
