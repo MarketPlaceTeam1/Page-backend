@@ -37,7 +37,7 @@ router.get('/Fronted', (ctx) => {
 function guardarDatosFrontedEnArchivo() {
   const datosJSON = JSON.stringify(datosFronted, null, 2);
 
-  fs.writeFile('./', datosJSON, err => {
+  fs.writeFile('./datosFronted.json', datosJSON, err => {
     if (err) {
       console.error('Error al guardar los datos de Fronted en el archivo JSON:', err);
     } else {
