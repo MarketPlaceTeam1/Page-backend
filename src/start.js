@@ -1,23 +1,19 @@
-import { promisify } from "util";
-import { exec } from "child_process";
-const execPromise = promisify(exec);
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
 
 async function deploy() {
-  try {
-    const { stdout: output1 } = await execPromise("npm install");
+    const { stdout: output1 } = await exec("yarn install");
     console.log("Installing dependencies...");
     console.log(output1);
 
-    const { stdout: output2 } = await execPromise("npm run db:migrate");
+    const { stdout: output2 } = await exec("yarn db:migrate");
     console.log("Migrating database...");
     console.log(output2);
 
-    const { stdout: output3 } = await execPromise("npm run db:seed");
+    const { stdout: output3 } = await exec("yarn db:seed");
     console.log("Seeding database...");
     console.log(output3);
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
 }
+
 
 deploy();
