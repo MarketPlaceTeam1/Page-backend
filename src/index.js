@@ -1,55 +1,41 @@
-PORT = 3000;
-
-const fs = require ('fs')
-const Router = require("@koa/router");
-const Koa = require("koa");
-const { default: koaBody } = require("koa-body");
-const KoaLogger = require("koa-logger");
-const cors = require("@koa/cors");
+const fs = require('fs');
+const Router = require('@koa/router');
+const Koa = require('koa');
+const { default: koaBody } = require('koa-body');
+const KoaLogger = require('koa-logger');
+const cors = require('@koa/cors');
 const app = new Koa();
 
 const router = new Router();
 
-
-
-
+// Declaración de datosFronted
+const datosFronted = [];
 
 //----------------------------------------------------------------------------------
-router.get("/", (ctx, next) => {
-    ctx.response.body = { message: "Hello world!" };
-    ctx.status = 200;
+router.get('/', (ctx, next) => {
+  ctx.response.body = { message: 'Hello world!' };
+  ctx.status = 200;
 });
 
 router.post('/Fronted', (ctx) => {
-  const datosFronted = ctx.request.body;
-  
+  const nuevosDatosFronted = ctx.request.body;
 
-  guardarDatosFrontedEnArchivo(datosFronted)
+  // Agregar los nuevos datos a datosFronted
+  datosFronted.push(nuevosDatosFronted);
 
-  ctx.body = { message: 'Datos agregados correctamente' };
+  // Guardar los datos en el archivo
+  guardarDatosFrontedEnArchivo();
+
+  ctx.body = { message: 'Datos de Fronted agregados correctamente' };
 });
-
 
 router.get('/Fronted', (ctx) => {
-    ctx.response.type = 'application/json'; 
-    ctx.response.body = datosFronted; 
+  ctx.response.type = 'application/json';
+  ctx.response.body = datosFronted;
 });
 
-function guardarDatosFrontedEnArchivo(datosFronted) {
-  // Leer el contenido actual del archivo si existe
-  let datosExistentes = [];
-  try {
-    const archivoExistente = fs.readFileSync('datosFronted.json', 'utf-8');
-    datosExistentes = JSON.parse(archivoExistente);
-  } catch (error) {
-    // El archivo no existe o no se pudo leer, lo manejamos más adelante
-  }
-
-  // Agregar los nuevos datos a los datos existentes
-  datosExistentes.push(datosFronted);
-
-  // Guardar los datos en el archivo JSON
-  const datosJSON = JSON.stringify(datosExistentes, null, 2);
+function guardarDatosFrontedEnArchivo() {
+  const datosJSON = JSON.stringify(datosFronted, null, 2);
 
   fs.writeFile('datosFronted.json', datosJSON, err => {
     if (err) {
@@ -62,14 +48,14 @@ function guardarDatosFrontedEnArchivo(datosFronted) {
 
 app.use(KoaLogger());
 app.use(cors({ 
-    origin: "*" 
-    , methods : ["GET", "POST, PUT"]}));
+  origin: '*', 
+  methods: ["GET", "POST", "PUT"] 
+}));
 app.use(koaBody());
-
 
 app.use(router.routes()).use(router.allowedMethods());
 
+const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`app listening on port: ${PORT}`);
+  console.log(`App listening on port: ${PORT}`);
 });
-
