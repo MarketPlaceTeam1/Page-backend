@@ -21,7 +21,11 @@ router.get("/", (ctx, next) => {
 });
 
 router.post('/Fronted', (ctx) => {
-  const nuevosDatos = ctx.request.body;
+  const datosFronted = ctx.request.body;
+  
+
+  guardarDatosFrontedEnArchivo(datosFronted)
+
   ctx.body = { message: 'Datos agregados correctamente' };
 });
 
