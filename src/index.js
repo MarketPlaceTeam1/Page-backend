@@ -41,7 +41,7 @@ function guardarDatosFrontedEnArchivo() {
   const datosJSON = JSON.stringify(datosFronted, null, 2);
   
   // Obtener la ruta absoluta del archivo usando path.join
-  const rutaArchivo = path.join(__dirname, 'datosFronted.json');
+  const rutaArchivo = path.join(__dirname, './datosFronted.json');
 
   fs.writeFile(rutaArchivo, datosJSON, err => {
     if (err) {
